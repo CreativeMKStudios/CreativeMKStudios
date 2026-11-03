@@ -1,0 +1,121 @@
+---
+import PageHero from '../components/PageHero.astro';
+import { email, mailHref, plans } from '../data/site';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { pageGraph } from '../lib/schema';
+
+const title = 'Contact CreativeMKStudios | Milton Keynes Web Design';
+const description =
+  'Email George Childs Gatty at creativemkstudios@gmail.com. Ask about a small business website in Milton Keynes or Bedfordshire.';
+const site = Astro.site ?? new URL('https://creativemkstudios.co.uk');
+const schema = pageGraph({
+  site,
+  path: '/contact',
+  title,
+  description,
+  pageType: 'ContactPage',
+  crumbs: [
+    { name: 'Home', path: '/' },
+    { name: 'Contact', path: '/contact' },
+  ],
+});
+const pageOptions = [...plans.map((plan) => plan.name), 'More than 10 pages', 'Not sure yet'];
+---
+
+<BaseLayout title={title} description={description} schema={schema}>
+  <PageHero
+    crumbs={[
+      { href: '/', label: 'Home' },
+      { label: 'Contact' },
+    ]}
+    title="Contact"
+    accent="George Childs Gatty"
+    lede="Email me about your business, the towns you cover, and the pages you need. I will reply with a yearly price and a finish date."
+  />
+
+  <section class="section">
+    <div class="wrap split">
+      <div class="stack">
+        <h2 class="display display-md">Email</h2>
+        <p class="prose">
+          <a href={mailHref()}>{email}</a>
+        </p>
+        <p class="prose">The form opens your email app with the message ready. You still press send. If nothing opens, use the address above.</p>
+        <p class="fine">I do not publish a phone number. Email is the way to reach me. Read the <a href="/privacy">privacy note</a>.</p>
+      </div>
+      <form class="form" id="enquiry">
+        <div class="fields-2">
+          <label>
+            <span>Your name</span>
+            <input name="name" type="text" autocomplete="name" required />
+          </label>
+          <label>
+            <span>Email</span>
+            <input name="email" type="email" autocomplete="email" required />
+          </label>
+        </div>
+        <div class="fields-2">
+          <label>
+            <span>Business name</span>
+            <input name="business" type="text" autocomplete="organization" required />
+          </label>
+          <label>
+            <span>Town</span>
+            <input name="town" type="text" autocomplete="address-level2" required />
+          </label>
+        </div>
+        <label>
+          <span>Pages you need</span>
+          <select name="pages" required>
+            <option value="">Choose one</option>
+            {pageOptions.map((option) => <option value={option}>{option}</option>)}
+          </select>
+        </label>
+        <label>
+          <span>What should the site say?</span>
+          <textarea name="message" required></textarea>
+        </label>
+        <p>
+          <button class="pill" type="submit">
+            Open email
+            <span class="arrow" aria-hidden="true">
+              <svg viewBox="0 0 16 16" width="14" height="14">
+                <path d="M6 3.5 10.5 8 6 12.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </span>
+          </button>
+        </p>
+        <p class="form-status" id="form-status" role="status"></p>
+      </form>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  import { email } from '../data/site';
+
+  const form = document.querySelector<HTMLFormElement>('#enquiry');
+  const status = document.querySelector<HTMLElement>('#form-status');
+
+  form?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    if (!form) return;
+    const data = new FormData(form);
+    const read = (key: string) => String(data.get(key) ?? '').trim();
+    const name = read('name');
+    const body = [
+      `Name: ${name}`,
+      `Email: ${read('email')}`,
+      `Business: ${read('business')}`,
+      `Town: ${read('town')}`,
+      `Pages needed: ${read('pages')}`,
+      '',
+      read('message'),
+    ].join('\n');
+    const href = `mailto:${email}?subject=${encodeURIComponent(`Website enquiry from ${name}`)}&body=${encodeURIComponent(body)}`;
+    window.location.href = href;
+    if (status) {
+      status.textContent = `Your email app should open with this message ready. Press send to finish it. If nothing opens, email ${email}.`;
+    }
+  });
+</script>

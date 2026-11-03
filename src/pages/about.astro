@@ -1,0 +1,91 @@
+---
+import Cta from '../components/Cta.astro';
+import PageHero from '../components/PageHero.astro';
+import { email, mailHref, person, studio } from '../data/site';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { pageGraph } from '../lib/schema';
+
+const title = 'About George Childs Gatty | CreativeMKStudios';
+const description =
+  'George Childs Gatty runs CreativeMKStudios. He builds small business websites in Milton Keynes and Bedfordshire that are written to be found on Google.';
+const site = Astro.site ?? new URL('https://creativemkstudios.co.uk');
+const schema = pageGraph({
+  site,
+  path: '/about',
+  title,
+  description,
+  pageType: 'AboutPage',
+  crumbs: [
+    { name: 'Home', path: '/' },
+    { name: 'About', path: '/about' },
+  ],
+});
+---
+
+<BaseLayout title={title} description={description} schema={schema}>
+  <PageHero
+    crumbs={[
+      { href: '/', label: 'Home' },
+      { label: 'About' },
+    ]}
+    title="George Childs"
+    accent="Gatty"
+    lede="I run CreativeMKStudios. I design websites for small businesses that want to be found on Google."
+  />
+
+  <section class="section">
+    <div class="wrap split">
+      <h2 class="display display-md">What I <span class="grad">do</span></h2>
+      <div class="prose">
+        <p>I specialise in small business websites. I work in Milton Keynes and across Bedfordshire.</p>
+        <p>I keep each page direct. A visitor should know what you do, where you work, and how to contact you without hunting.</p>
+        <p>I write the words. I build the pages. I set the titles, the sitemap, and the business details Google reads. I do not sell ads.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top: 0">
+    <div class="wrap split">
+      <h2 class="display display-md">How the work is <span class="grad">priced</span></h2>
+      <div class="prose">
+        <p>There is no upfront build cost. You pay a monthly price based on the number of pages. You pay for the year in one go. Small changes to text, photos, prices, and opening hours are included.</p>
+        <p>You own your domain. You own your content. I host the site while the plan is active. The plans are on the <a href="/pricing">pricing page</a>.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top: 0">
+    <div class="wrap split">
+      <h2 class="display display-md">Where I <span class="grad">work</span></h2>
+      <div class="prose">
+        <p>The focus is Milton Keynes and Bedfordshire. That includes the towns around Milton Keynes, and towns from Luton and Dunstable across to Bedford, Biggleswade, and Sandy.</p>
+        <p>I do not publish a studio address. We start by email. If a meeting helps, we can meet in the area.</p>
+        <p>
+          <a href="/web-design-milton-keynes">Web design in Milton Keynes</a><br />
+          <a href="/web-design-bedfordshire">Web design in Bedfordshire</a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top: 0">
+    <div class="wrap">
+      <h2 class="display display-md">Studio <span class="grad">facts</span></h2>
+      <ul class="ticks">
+        <li>Name: {person}</li>
+        <li>Studio: {studio}</li>
+        <li>Work: small business websites</li>
+        <li>Area: Milton Keynes and Bedfordshire</li>
+        <li>Build fee: none</li>
+        <li>Payment: monthly rate, paid once a year</li>
+        <li>Small changes: included</li>
+        <li>Email: <a href={mailHref()}>{email}</a></li>
+      </ul>
+    </div>
+  </section>
+
+  <Cta
+    title="Work with George"
+    text="Email the business name, the towns you cover, and how many pages you need. I will reply with a yearly price and a finish date."
+  />
+</BaseLayout>

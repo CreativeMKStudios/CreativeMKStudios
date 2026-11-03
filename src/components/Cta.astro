@@ -1,0 +1,27 @@
+---
+import Arrow from './Arrow.astro';
+import { email, mailHref } from '../data/site';
+
+interface Props {
+  title: string;
+  text: string;
+  subject?: string;
+}
+const { title, text, subject = 'Website enquiry' } = Astro.props;
+---
+
+<section class="section cta">
+  <div class="wrap split">
+    <h2 class="display display-md">{title}</h2>
+    <div class="stack">
+      <p class="prose">{text}</p>
+      <p>
+        <a class="pill" href={mailHref(subject)}>
+          Email me
+          <Arrow dir="right" />
+        </a>
+      </p>
+      <p class="fine">{email}</p>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,62 @@
+---
+import { mailHref, nav, studio } from '../data/site';
+
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+const startHref = mailHref('Website enquiry');
+---
+
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="/" aria-label={`${studio}, home`}>
+      <span class="brand-mark" aria-hidden="true"></span>
+      <span>{studio}</span>
+    </a>
+    <button class="menu-toggle" type="button" data-menu aria-expanded="false" aria-controls="site-nav">
+      Menu
+    </button>
+    <nav class="site-nav" id="site-nav" aria-label="Main">
+      <ul class="nav-links">
+        {
+          nav.map((item) => (
+            <li>
+              <a href={item.href} aria-current={path === item.href ? 'page' : undefined}>
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+        <li><a class="text-link" href={startHref}>Email me</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const button = document.querySelector<HTMLButtonElement>('[data-menu]');
+  const navEl = document.querySelector<HTMLElement>('#site-nav');
+
+  if (button && navEl) {
+    const setOpen = (open: boolean) => {
+      button.setAttribute('aria-expanded', String(open));
+      navEl.classList.toggle('is-open', open);
+      document.body.classList.toggle('nav-open', open);
+    };
+
+    button.addEventListener('click', () => {
+      setOpen(button.getAttribute('aria-expanded') !== 'true');
+    });
+
+    navEl.addEventListener('click', (event) => {
+      if (event.target instanceof HTMLAnchorElement) setOpen(false);
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') setOpen(false);
+    });
+
+    const desktop = window.matchMedia('(min-width: 981px)');
+    desktop.addEventListener('change', () => {
+      if (desktop.matches) setOpen(false);
+    });
+  }
+</script>

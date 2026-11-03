@@ -1,0 +1,28 @@
+---
+import Arrow from './Arrow.astro';
+import { gbp, mailHref, plans, yearly } from '../data/site';
+---
+
+<div class="plan-grid">
+  {
+    plans.map((plan) => (
+      <article class:list={['plan', plan.usual && 'is-usual']}>
+        <div class="plan-top">
+          <h3>{plan.name}</h3>
+          {plan.usual ? <p class="tag">Usual fit</p> : null}
+        </div>
+        <p class="amount">
+          {gbp(plan.monthly)}
+          <span>a month</span>
+        </p>
+        <p>You pay {gbp(yearly(plan.monthly))} for the year.</p>
+        <p>{plan.summary}</p>
+        <p>{plan.detail}</p>
+        <a class="pill" href={mailHref(`${plan.name} website`)}>
+          Email to start
+          <Arrow dir="right" />
+        </a>
+      </article>
+    ))
+  }
+</div>

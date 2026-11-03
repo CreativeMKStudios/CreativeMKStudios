@@ -1,0 +1,44 @@
+---
+import PageHero from '../components/PageHero.astro';
+import { email, mailHref, person, studio } from '../data/site';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { pageGraph } from '../lib/schema';
+
+const title = 'Privacy Policy | CreativeMKStudios';
+const description = 'How CreativeMKStudios uses your email if you get in touch. No tracking cookies and no ads on this site.';
+const site = Astro.site ?? new URL('https://creativemkstudios.co.uk');
+const schema = pageGraph({
+  site,
+  path: '/privacy',
+  title,
+  description,
+  crumbs: [
+    { name: 'Home', path: '/' },
+    { name: 'Privacy', path: '/privacy' },
+  ],
+});
+---
+
+<BaseLayout title={title} description={description} schema={schema} robots="noindex, follow">
+  <PageHero
+    crumbs={[
+      { href: '/', label: 'Home' },
+      { label: 'Privacy' },
+    ]}
+    title="Privacy"
+    accent="policy"
+    lede="This note explains what happens when you email CreativeMKStudios. It was last updated on 3 November 2026."
+  />
+
+  <section class="section">
+    <div class="wrap prose stack">
+      <p>I am {person}. I trade as {studio}. My email is <a href={mailHref()}>{email}</a>.</p>
+      <p>This website does not use tracking cookies. It does not show ads. It does not use analytics tools.</p>
+      <p>If you email me, I use your name, email address, and message to reply and to do the work you asked for. I do not sell that information. I do not pass it to advertisers.</p>
+      <p>I keep emails for as long as I need them to do the work, or to meet the law. You can ask me to delete them. You can also ask for a copy of what I hold. Email me to do either.</p>
+      <p>This is a static website. The host may keep basic server logs, such as the page asked for and a browser type. I use those logs only to keep the site working and secure.</p>
+      <p>The contact form does not store your message on this website. It opens your own email app so you can send the message yourself.</p>
+      <p>If you think your data has been misused, you can contact the ICO at <a href="https://ico.org.uk">ico.org.uk</a>.</p>
+    </div>
+  </section>
+</BaseLayout>

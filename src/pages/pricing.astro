@@ -1,0 +1,103 @@
+---
+import Cta from '../components/Cta.astro';
+import PageHero from '../components/PageHero.astro';
+import PricingPlans from '../components/PricingPlans.astro';
+import { extraPageMonthly, faqs, gbp, included, notIncluded, yearly } from '../data/site';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { pageGraph } from '../lib/schema';
+
+const title = 'Website Pricing, Paid Yearly | CreativeMKStudios';
+const description =
+  'Website prices from £49 a month, based on page count. Paid once a year. No upfront build cost. Small changes are included.';
+const site = Astro.site ?? new URL('https://creativemkstudios.co.uk');
+const crumbs = [
+  { name: 'Home', path: '/' },
+  { name: 'Pricing', path: '/pricing' },
+];
+const schema = pageGraph({
+  site,
+  path: '/pricing',
+  title,
+  description,
+  crumbs,
+  faqs,
+});
+---
+
+<BaseLayout title={title} description={description} schema={schema}>
+  <PageHero
+    crumbs={[
+      { href: '/', label: 'Home' },
+      { label: 'Pricing' },
+    ]}
+    title="Pricing"
+    accent="by the page"
+    lede="You pay a monthly price based on how many pages you need. You pay for the year in one go. There is no upfront build cost."
+  />
+
+  <section class="section" id="plans">
+    <div class="wrap">
+      <div class="split">
+        <h2 class="display display-md">The <span class="grad">plans</span></h2>
+        <div class="prose">
+          <p>Two pages and five pages are the same plan. You pay the plan that covers your page count.</p>
+          <p>
+            More than 10 pages is {gbp(extraPageMonthly)} a month for each extra page. That is {gbp(yearly(extraPageMonthly))} a year for each extra page. I agree that price before I start.
+          </p>
+        </div>
+      </div>
+      <PricingPlans />
+    </div>
+  </section>
+
+  <section class="section" id="included" style="padding-top: 0">
+    <div class="wrap">
+      <h2 class="display display-md">Included on <span class="grad">every plan</span></h2>
+      <ul class="ticks">
+        {included.map((item) => <li>{item}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" id="changes" style="padding-top: 0">
+    <div class="wrap split">
+      <h2 class="display display-md">Small <span class="grad">changes</span></h2>
+      <div class="prose">
+        <p>Small changes are free while your yearly plan is active. A small change is a short update you can explain in a sentence or two.</p>
+        <p>Text, photos, prices, phone numbers, and opening hours all count. A new page does not. A new section does not. Those need a higher plan, or a price we agree first.</p>
+        <p>I aim to make small changes within a few working days. Email them to me.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top: 0">
+    <div class="wrap">
+      <h2 class="display display-md">Not <span class="grad">included</span></h2>
+      <ul class="plain-list">
+        {notIncluded.map((item) => <li>{item}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" id="faq" style="padding-top: 0">
+    <div class="wrap">
+      <h2 class="display display-md">Questions</h2>
+      <div class="faq">
+        {
+          faqs.map((item) => (
+            <details>
+              <summary>{item.question}</summary>
+              <p>{item.answer}</p>
+            </details>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <Cta
+    title="Ask for a yearly price"
+    text="Email your business name, the towns you cover, and a page count. I will reply with the yearly total and a finish date. You pay only after you agree."
+    subject="Pricing enquiry"
+  />
+</BaseLayout>
