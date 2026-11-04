@@ -1,0 +1,96 @@
+---
+import Cta from '../components/Cta.astro';
+import PageHero from '../components/PageHero.astro';
+import { mkTowns } from '../data/site';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { pageGraph, serviceNode } from '../lib/schema';
+
+const title = 'Web Design in Milton Keynes | CreativeMKStudios';
+const description =
+  'Small business web design in Milton Keynes by George Childs Gatty. Clear pages for local search. Monthly price by page count, paid yearly. No build fee.';
+const path = '/web-design-milton-keynes';
+const site = Astro.site ?? new URL('https://creativemkstudios.co.uk');
+const schema = pageGraph({
+  site,
+  path,
+  title,
+  description,
+  crumbs: [
+    { name: 'Home', path: '/' },
+    { name: 'Web design in Milton Keynes', path },
+  ],
+  extra: [
+    serviceNode(site, {
+      name: 'Web design in Milton Keynes',
+      path,
+      description,
+      areaName: 'Milton Keynes',
+      areaType: 'City',
+    }),
+  ],
+});
+---
+
+<BaseLayout title={title} description={description} schema={schema}>
+  <PageHero
+    crumbs={[
+      { href: '/', label: 'Home' },
+      { label: 'Milton Keynes' },
+    ]}
+    title="Web design in"
+    accent="Milton Keynes"
+    lede="I build websites for small businesses in Milton Keynes. The pages are clear on a phone, and written so Google can tell what you do and where you do it."
+  />
+
+  <section class="section">
+    <div class="wrap split">
+      <h2 class="display display-md">What people <span class="grad">search</span></h2>
+      <div class="prose">
+        <p>People in Milton Keynes search on a phone. They type a service and a place. A café near Central Milton Keynes. An electrician in Bletchley. A clinic in Stony Stratford.</p>
+        <p>Your first screen should answer that search. Say what you do. Say the places you cover. Put a phone number, email, or contact link where it can be seen at once.</p>
+        <p>I write those lines in plain words. I do not hide the offer under a slogan.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top: 0">
+    <div class="wrap split">
+      <h2 class="display display-md">One page, or a page <span class="grad">per service</span></h2>
+      <div class="prose">
+        <p>A business with one service can start with one page. A business with several services should not hide them in one vague line.</p>
+        <p>A plumber who also fits bathrooms should have a page for each, if people search for both. The price follows the number of pages. There is no build fee.</p>
+        <p>See the <a href="/pricing">pricing page</a> for the yearly totals.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top: 0">
+    <div class="wrap">
+      <div class="split">
+        <h2 class="display display-md">Towns I <span class="grad">cover</span></h2>
+        <div class="prose">
+          <p>I work with businesses across Milton Keynes, including the places below. If you serve only two of them, the site will name those two. I will not add towns you do not cover.</p>
+        </div>
+      </div>
+      <ul class="chips">
+        {mkTowns.map((town) => <li>{town}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top: 0">
+    <div class="wrap split">
+      <h2 class="display display-md">The same <span class="grad">offer</span></h2>
+      <div class="prose">
+        <p>The plans, the yearly payment, and the free small changes are the same in Milton Keynes and in Bedfordshire. If you also work in Bedfordshire, say so. We can add that area when the plan has room for the page.</p>
+        <p><a href="/web-design-bedfordshire">Web design in Bedfordshire</a></p>
+      </div>
+    </div>
+  </section>
+
+  <Cta
+    title="Start a Milton Keynes site"
+    text="Email your business, the parts of Milton Keynes you cover, and how many pages you need. I will send the yearly price and a finish date before you pay."
+    subject="Milton Keynes website enquiry"
+  />
+</BaseLayout>

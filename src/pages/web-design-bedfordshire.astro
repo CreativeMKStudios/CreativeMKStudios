@@ -1,0 +1,94 @@
+---
+import Cta from '../components/Cta.astro';
+import PageHero from '../components/PageHero.astro';
+import { bedsTowns } from '../data/site';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { pageGraph, serviceNode } from '../lib/schema';
+
+const title = 'Web Design in Bedfordshire | CreativeMKStudios';
+const description =
+  'Small business web design in Bedfordshire by George Childs Gatty. Pages that name the towns you really serve. Paid yearly. No upfront build cost.';
+const path = '/web-design-bedfordshire';
+const site = Astro.site ?? new URL('https://creativemkstudios.co.uk');
+const schema = pageGraph({
+  site,
+  path,
+  title,
+  description,
+  crumbs: [
+    { name: 'Home', path: '/' },
+    { name: 'Web design in Bedfordshire', path },
+  ],
+  extra: [
+    serviceNode(site, {
+      name: 'Web design in Bedfordshire',
+      path,
+      description,
+      areaName: 'Bedfordshire',
+      areaType: 'AdministrativeArea',
+    }),
+  ],
+});
+---
+
+<BaseLayout title={title} description={description} schema={schema}>
+  <PageHero
+    crumbs={[
+      { href: '/', label: 'Home' },
+      { label: 'Bedfordshire' },
+    ]}
+    title="Web design in"
+    accent="Bedfordshire"
+    lede="I build websites for small businesses across Bedfordshire. That includes Bedford, Luton, and the towns between them. Each site names the places you really serve."
+  />
+
+  <section class="section">
+    <div class="wrap split">
+      <h2 class="display display-md">Name the <span class="grad">town</span></h2>
+      <div class="prose">
+        <p>A person in Luton is not looking for a Bedford tradesperson, unless you travel there. Google works the same way. A page that only says “Bedfordshire” is hard to match to a search for one town.</p>
+        <p>Name the towns you cover. If you cover the county, say that in plain words and list the main towns. If you cover two towns, name those two. I will not add a town you never visit.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top: 0">
+    <div class="wrap split">
+      <h2 class="display display-md">Pages that match <span class="grad">the work</span></h2>
+      <div class="prose">
+        <p>Give each main service its own page when people search for it on its own. A regular clean and an end-of-tenancy clean can share a page if they are one offer. Split them if customers look them up as different jobs.</p>
+        <p>I write the pages in short sentences. I set the titles, headings, and contact details so a person and a search engine can both follow them.</p>
+        <p>The price depends on the number of pages, not on which town you are in. See <a href="/pricing">pricing</a>.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top: 0">
+    <div class="wrap">
+      <div class="split">
+        <h2 class="display display-md">Towns in <span class="grad">Bedfordshire</span></h2>
+        <p class="prose">I cover these places, and the towns around them. The site will only list the ones you serve.</p>
+      </div>
+      <ul class="chips">
+        {bedsTowns.map((town) => <li>{town}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top: 0">
+    <div class="wrap split">
+      <h2 class="display display-md">Milton Keynes <span class="grad">as well</span></h2>
+      <div class="prose">
+        <p>CreativeMKStudios also builds sites for Milton Keynes. If you serve both areas, tell me. We will keep the claims honest on each page.</p>
+        <p>You still pay one yearly price, based on the pages you need. There is no upfront build cost. Small changes stay free for the year you have paid for.</p>
+        <p><a href="/web-design-milton-keynes">Web design in Milton Keynes</a></p>
+      </div>
+    </div>
+  </section>
+
+  <Cta
+    title="Start a Bedfordshire site"
+    text="Email your business, the Bedfordshire towns you cover, and how many pages you need. I will send the yearly price and a finish date before you pay."
+    subject="Bedfordshire website enquiry"
+  />
+</BaseLayout>

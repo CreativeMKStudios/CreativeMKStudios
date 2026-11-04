@@ -1,0 +1,34 @@
+---
+import { gbp, plans } from '../data/site';
+const from = gbp(plans[0].monthly);
+---
+
+<div class="shots">
+  <article class="shot shot-search">
+    <div class="shot-ui">
+      <div class="glass">
+        <p class="shot-label">Example search</p>
+        <p class="shot-title">Plumber in Milton Keynes</p>
+      </div>
+      <div class="glass">
+        <p class="result-url">yourbusiness.co.uk</p>
+        <p class="shot-title">Your business name</p>
+        <p class="result-text">The page names the service and the town. A customer can call from the first screen.</p>
+      </div>
+    </div>
+  </article>
+  <article class="shot shot-page">
+    <div class="shot-ui">
+      <div class="glass">
+        <p class="shot-label">Your website</p>
+        <p class="shot-title">What you do. Where you work. How to call.</p>
+        <ul class="shot-list">
+          <li>Service</li>
+          <li>Towns</li>
+          <li>Contact</li>
+        </ul>
+        <p class="result-text">Plans start at {from} a month. Paid once a year. No build fee.</p>
+      </div>
+    </div>
+  </article>
+</div>

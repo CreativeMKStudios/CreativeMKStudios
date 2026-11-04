@@ -1,0 +1,135 @@
+---
+import Arrow from '../components/Arrow.astro';
+import Cta from '../components/Cta.astro';
+import Mark from '../components/Mark.astro';
+import PricingPlans from '../components/PricingPlans.astro';
+import Spark from '../components/Spark.astro';
+import WorkCards from '../components/WorkCards.astro';
+import { areas, extraPageMonthly, gbp, person, steps, studio } from '../data/site';
+import { pageGraph } from '../lib/schema';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const title = 'Web Design Milton Keynes & Bedfordshire | CreativeMKStudios';
+const description =
+  'George Childs Gatty builds websites for small businesses in Milton Keynes and Bedfordshire. Pay monthly by page count, once a year. No build fee.';
+const site = Astro.site ?? new URL('https://creativemkstudios.co.uk');
+const schema = pageGraph({ site, path: '/', title, description });
+---
+
+<BaseLayout title={title} description={description} schema={schema}>
+  <section class="hero">
+    <div class="wrap">
+      <p class="eyebrow">
+        <span>{studio}</span>
+        <Spark />
+        <span>{person}</span>
+      </p>
+      <Mark />
+      <h1 class="display display-xl">
+        <span class="line">Small business</span>
+        <span class="line grad">web design</span>
+      </h1>
+      <p class="lede">
+        For Milton Keynes and Bedfordshire. Plain pages that help customers find you on Google. No upfront build cost.
+      </p>
+      <div class="hero-actions">
+        <a class="pill" href="#work">
+          Read more
+          <Arrow />
+        </a>
+        <a class="text-link" href="/pricing">See pricing</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap"><hr class="rule" /></div>
+
+  <section class="section" id="work">
+    <div class="wrap">
+      <div class="split">
+        <h2 class="display display-lg">Our <span class="grad">work</span></h2>
+        <div class="prose">
+          <p>I design and build websites for shops, trades, clinics, cafés, and other small businesses.</p>
+          <p>
+            Each page says what you do, where you work, and how to get in touch. I write in short sentences. I also add the pieces Google needs, such as page titles, a sitemap, and a short data block about your business.
+          </p>
+          <p>
+            You pay a monthly price based on how many pages you need. You pay that price once a year. There is no separate build fee. Small text and photo changes are free.
+          </p>
+        </div>
+      </div>
+      <WorkCards />
+    </div>
+  </section>
+
+  <div class="wrap"><hr class="rule" /></div>
+
+  <section class="section" id="pricing">
+    <div class="wrap">
+      <div class="split">
+        <h2 class="display display-md">How <span class="grad">pricing</span> works</h2>
+        <p class="prose">
+          The monthly price depends on the number of pages. You pay 12 months at the start. That payment includes the design and the build. There is no bill on top.
+        </p>
+      </div>
+      <ol class="steps">
+        {
+          steps.map((step, index) => (
+            <li>
+              <span class="num">{String(index + 1).padStart(2, '0')}</span>
+              <h3>{step.title}</h3>
+              <p>{step.text}</p>
+            </li>
+          ))
+        }
+      </ol>
+      <PricingPlans />
+      <p class="fine" style="margin-top: 1.25rem">
+        More than 10 pages is {gbp(extraPageMonthly)} a month for each extra page, paid once a year. I confirm that price before I start.
+        <a href="/pricing">Read the full pricing</a>.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" id="areas" style="padding-top: 0">
+    <div class="wrap">
+      <div class="split">
+        <h2 class="display display-md">Where I <span class="grad">work</span></h2>
+        <p class="prose">
+          I work with customers in the Milton Keynes area and across Bedfordshire. The site names the towns you really cover. I do not add places you do not visit.
+        </p>
+      </div>
+      <div class="area-grid">
+        {
+          areas.map((area) => (
+            <a class="area-card" href={area.href}>
+              <p class="kicker">Area</p>
+              <h3>{area.title}</h3>
+              <p>{area.text}</p>
+              <span class="more">Read the area page</span>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top: 0">
+    <div class="wrap split">
+      <h2 class="display display-md">About the <span class="grad">studio</span></h2>
+      <div class="prose">
+        <p>
+          I am {person}. {studio} is my studio. I specialise in small business websites that are built to be found on Google.
+        </p>
+        <p>
+          <a href="/about">Read about George</a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <Cta
+    title="Start with an email"
+    text="Tell me your business name, the towns you cover, and how many pages you think you need. I will reply with the yearly price and a finish date before you pay."
+  />
+</BaseLayout>

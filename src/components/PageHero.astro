@@ -1,0 +1,27 @@
+---
+import Breadcrumbs from './Breadcrumbs.astro';
+
+interface Crumb {
+  href?: string;
+  label: string;
+}
+interface Props {
+  crumbs: Crumb[];
+  title: string;
+  accent: string;
+  lede: string;
+}
+const { crumbs, title, accent, lede } = Astro.props;
+---
+
+<header class="page-hero">
+  <div class="wrap">
+    <Breadcrumbs items={crumbs} />
+    <p class="kicker">CreativeMKStudios</p>
+    <h1 class="display display-lg">
+      <span class="line">{title}</span>
+      <span class="line grad">{accent}</span>
+    </h1>
+    <p class="lede">{lede}</p>
+  </div>
+</header>
